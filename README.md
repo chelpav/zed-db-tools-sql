@@ -1,5 +1,8 @@
 # zed-db-tools-sql
 
+Репозиторий: https://github.com/chelpav/zed-db-tools-sql
+(грамматика — отдельный форк: https://github.com/chelpav/tree-sitter-jinja2-sql)
+
 Zed-расширение для подсветки SQL-шаблонов **classic-db-tools** (`*.sql.tmpl`, а также
 `*.sql.j2`, `*.sql.jinja`). Язык называется **SQL (db-tools tmpl)**.
 
@@ -90,22 +93,24 @@ https://github.com/chelpav/tree-sitter-jinja2-sql), ~10–30 сек. После 
 кнопкой перезапусти `install.command` — он почистит клон и поставит копию.
 Если GitHub недоступен — **только скриптом** (готовый wasm, без сети).
 
-Передать коллеге:
+Передать коллеге (любой из трёх способов):
+
+**A. Через git** (обновление = `git pull` + повторная установка):
 
 ```bash
-cd ~/evraz && zip -r zed-db-tools-sql.zip zed-db-tools-sql
+git clone https://github.com/chelpav/zed-db-tools-sql.git
+cd zed-db-tools-sql
 ```
 
-Коллега:
+**B. Zip**: `cd ~/evraz && zip -r zed-db-tools-sql.zip zed-db-tools-sql` — отправить файл.
 
-1. Распаковать zip в **постоянное** место (не в Downloads — папка должна жить).
-2. Запустить установщик для своей ОС:
-   - **macOS**: двойной клик по `zed-db-tools-sql/install.command`
-     (или `bash zed-db-tools-sql/install.command`);
-   - **Windows**: правый клик по `zed-db-tools-sql/install.ps1` → «Run with PowerShell»
-     (или `powershell -ExecutionPolicy Bypass -File zed-db-tools-sql/install.ps1`);
-   - **Linux**: `bash zed-db-tools-sql/install.command`.
-3. Перезапустить Zed полностью.
+Дальше коллега выбирает способ установки:
+
+- **Кнопкой** (если доступен GitHub): Zed → Extensions (⇧⌧X) → ⚙ →
+  **Install Dev Extension** → папка расширения. Компилирует наш форк (~10–30 сек).
+  После — желательно перезапустить `install.command` (почистит клон, поставит копию).
+- **Скриптом** (без сети): macOS — двойной клик `install.command`; Windows —
+  правый клик `install.ps1` → «Run with PowerShell»; Linux — `bash install.command`.
 
 Требование: Zed не сильно старый (wasm собран под ABI 14 — покрывает и предыдущие
 версии; совсем древний Zed — обновить). macOS-путь проверен живьём; скрипты
