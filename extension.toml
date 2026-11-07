@@ -1,6 +1,6 @@
 id = "db-tools-sql"
 name = "SQL (db-tools tmpl)"
-version = "0.2.1"
+version = "0.3.0"
 schema_version = 1
 description = "Подсветка *.sql.tmpl шаблонов classic-db-tools: Jinja2-теги + SQL, инъектированный в сырой текст"
 authors = ["14654 backend team"]
@@ -10,4 +10,4 @@ authors = ["14654 backend team"]
 # готовый grammars/jinja2.wasm из этого же каталога).
 [grammars.jinja2]
 repository = "https://github.com/chelpav/tree-sitter-jinja2-sql"
-commit = "63f0d0540839610c3ddce1e0aab054279422dac9"
+commit = "98118fb9a1c4809dbd4b33a74295d0609781c2e7"

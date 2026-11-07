@@ -32,7 +32,7 @@
 
 ; Ключевые слова jinja — @string.special (фолбэк string): стабильно другая
 ; гамма, чем @keyword SQL-слоя, при любой теме
-["if" "elif" (jinja_else) "for" "in" "block" "endblock" "extends" "include" "import" "from" "as" "set" "macro" "endmacro" "endif" "endfor" "endcall" "filter" (jinja_raw) "endraw"] @string.special
+["if" "elif" (jinja_else) "for" "in" "and" "or" "block" "endblock" "extends" "include" "import" "from" "as" "set" "macro" "endmacro" "endif" "endfor" "endcall" "filter" (jinja_raw) "endraw"] @string.special
 
 ; Имена блоков/макросов/фильтров — @attribute: не пересекается с @function
 ; SQL-слоя (в популярных темах всегда разные гаммы)
@@ -74,7 +74,7 @@
 ; SQL-слой справился сам, стили совпадают и друг другу не мешают.
 
 ((raw_word) @keyword
-  (#match? @keyword "^(?i)(SELECT|FROM|WHERE|AND|OR|NOT|EXISTS|HAVING|UNION|ALL|ANY|SOME|DISTINCT|JOIN|INNER|LEFT|RIGHT|FULL|CROSS|OUTER|LATERAL|ON|USING|AS|WITH|RECURSIVE|INSERT|INTO|VALUES|UPDATE|DELETE|CREATE|DROP|ALTER|TABLE|INDEX|VIEW|RETURNING|ORDER|GROUP|LIMIT|OFFSET|CASE|WHEN|THEN|ELSE|END|IS|IN|LIKE|ILIKE|SIMILAR|BETWEEN|ASC|DESC|EXCEPT|INTERSECT|WINDOW|OVER|PARTITION|RANGE|ROWS|FILTER|WITHIN|CAST|INTERVAL|DEFAULT|PRIMARY|FOREIGN|REFERENCES|UNIQUE|CHECK|CONSTRAINT|CONFLICT|DO|NOTHING|SET)$"))
+  (#match? @keyword "^(?i)(SELECT|FROM|WHERE|AND|OR|NOT|EXISTS|HAVING|UNION|ALL|ANY|SOME|DISTINCT|JOIN|INNER|LEFT|RIGHT|FULL|CROSS|OUTER|LATERAL|ON|USING|AS|WITH|RECURSIVE|INSERT|INTO|VALUES|UPDATE|DELETE|CREATE|DROP|ALTER|TABLE|INDEX|VIEW|RETURNING|ORDER|GROUP|BY|LIMIT|OFFSET|CASE|WHEN|THEN|ELSE|END|IS|IN|LIKE|ILIKE|SIMILAR|BETWEEN|ASC|DESC|EXCEPT|INTERSECT|WINDOW|OVER|PARTITION|RANGE|ROWS|FILTER|WITHIN|CAST|INTERVAL|DEFAULT|PRIMARY|FOREIGN|REFERENCES|UNIQUE|CHECK|CONSTRAINT|CONFLICT|DO|NOTHING|SET)$"))
 
 ((raw_word) @constant
   (#match? @constant "^(?i)(NULL|TRUE|FALSE)$"))
