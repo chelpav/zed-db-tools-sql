@@ -4,6 +4,7 @@ version = "0.4.0"
 schema_version = 1
 description = "Syntax highlighting for Jinja2 SQL templates (*.sql.tmpl, *.sql.j2, *.sql.jinja): jinja tags in their own color palette with SQL injected into the raw text"
 authors = ["Pavel Chelyaev"]
+repository = "https://github.com/chelpav/zed-db-tools-sql"
 
 # Грамматика — наш форк на GitHub (кнопка Install Dev Extension клонирует
 # и компилирует его; при загрузке расширения скриптом используется
