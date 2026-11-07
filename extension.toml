@@ -6,9 +6,9 @@ description = "Syntax highlighting for Jinja2 SQL templates (*.sql.tmpl, *.sql.j
 authors = ["Pavel Chelyaev"]
 repository = "https://github.com/chelpav/zed-db-tools-sql"
 
-# Грамматика — наш форк на GitHub (кнопка Install Dev Extension клонирует
-# и компилирует его; при загрузке расширения скриптом используется
-# готовый grammars/jinja2.wasm из этого же каталога).
+# The grammar is loaded from the prebuilt grammars/jinja2.wasm when the
+# extension is installed by the install script; the Install Dev Extension
+# button compiles it from the repository below instead.
 [grammars.jinja2]
 repository = "https://github.com/chelpav/tree-sitter-jinja2-sql"
 commit = "b5de74805362d937a12a99e3151bc99473ed43d3"

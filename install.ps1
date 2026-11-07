@@ -1,9 +1,10 @@
-﻿# Установка Zed-расширения "SQL (db-tools tmpl)" на Windows.
-# Грамматика едет внутри (grammars/jinja2.wasm) — компиляция и сеть не нужны.
-# Файл хранится в UTF-8 с BOM: без BOM Windows PowerShell 5.1 читает скрипт
-# в системной кодировке и падает на кириллице в строках.
+﻿# Installs the "SQL (db-tools tmpl)" Zed extension on Windows.
+# The grammar ships prebuilt (grammars/jinja2.wasm) — no compilation
+# and no network access are needed.
+# This file is pure ASCII on purpose: Windows PowerShell 5.1 parses
+# BOM-less UTF-8 scripts in the system codepage, which breaks on non-ASCII.
 #
-# Запуск: правый клик -> "Run with PowerShell", либо:
+# Run: right-click -> "Run with PowerShell", or:
 #   powershell -ExecutionPolicy Bypass -File install.ps1
 
 $ErrorActionPreference = 'Stop'
@@ -14,11 +15,12 @@ $Dest = "$Base\installed\db-tools-sql"
 
 New-Item -ItemType Directory -Force -Path "$Base\installed" | Out-Null
 
-# убрать старые попытки: прежнюю копию и хвост кнопки Install Dev Extension
+# Remove previous installs: an old copy and any leftover
+# from the Install Dev Extension button
 if (Test-Path $Dest) { Remove-Item -Recurse -Force $Dest }
 if (Test-Path "$Base\dev\db-tools-sql") { Remove-Item -Recurse -Force "$Base\dev\db-tools-sql" }
 
-# копируем (симлинки на Windows требуют Developer Mode / админа)
+# Copy (symlinks on Windows require Developer Mode / admin)
 Copy-Item -Path $ExtDir -Destination $Dest -Recurse
 if (Test-Path "$Dest\grammars\jinja2") { Remove-Item -Recurse -Force "$Dest\grammars\jinja2" }
 

@@ -1,91 +1,96 @@
 # zed-db-tools-sql
 
-Zed-расширение для подсветки SQL-шаблонов с Jinja2 (`*.sql.tmpl`, `*.sql.j2`,
-`*.sql.jinja`). Язык в Zed: **SQL (db-tools tmpl)**.
+Zed extension with syntax highlighting for SQL templates with Jinja2
+(`*.sql.tmpl`, `*.sql.j2`, `*.sql.jinja`). Built for
+[db-tools](https://github.com/variasov/classic-db-tools) SQL template files;
+works with any Jinja2 + SQL mix (dbt-style queries included).
 
-Грамматика — отдельный форк: [chelpav/tree-sitter-jinja2-sql](https://github.com/chelpav/tree-sitter-jinja2-sql).
+Language name in Zed: **SQL (db-tools tmpl)**.
 
-## Что даёт
+Grammar: a fork of [tree-sitter-jinja2](https://github.com/ArcherHume/tree-sitter-jinja2)
+— [chelpav/tree-sitter-jinja2-sql](https://github.com/chelpav/tree-sitter-jinja2-sql).
+
+## What you get
 
 - Jinja2: `{% if/elif/else %}`, `{% for %}`, `{% macro %}`, `{% set %}`,
   `{% include/extends/import/from %}`, `{% filter %}`, `{% raw %}`, `{# #}`,
-  значения `{{ ... }}` с пайп-фильтрами (`{{ x | sqlsafe }}`), кортежи, kwargs,
-  trim-тире `{%- ... -%}` / `{{- ... -}}` / `{#- ... -#}`.
-- **SQL инъектируется** в сырой текст между jinja-тегами (встроенная грамматика
-  Zed «SQL»): `SELECT/JOIN/WHERE/...`, операторы `<=`, `<>`, `<=>` (pgvector).
-- Слова, начинающие фрагмент после `}}`/`%}` (`AND`, `WHERE`, `NOT`,
-  `EXISTS`...), подсвечиваются фолбэк-правилами: SQL-слой парсит каждую текстовую
-  чанку как отдельный документ и сам теряет первые слова фрагментов.
-- Jinja и SQL — в разных гаммах при любой теме: jinja — `@string.special` /
-  `@attribute` («строчная» гамма), SQL — `@keyword` / `@function`.
+  `{{ ... }}` values with pipe filters (`{{ x | sqlsafe }}`), tuples, kwargs,
+  boolean `and`/`or`, whitespace-trim dashes `{%- ... -%}` / `{{- ... -}}` / `{#- ... -#}`.
+- **SQL is injected** into the raw text between jinja tags (Zed's built-in SQL
+  grammar): `SELECT/JOIN/WHERE/...` and SQL operators like `<=`, `<>`, `<=>`
+  (pgvector) get real SQL highlighting. All text chunks are parsed as a single
+  combined document, so fragments starting mid-statement (right after `}}`/`%}`)
+  keep their tables, columns and aliases highlighted.
+- Jinja and SQL use distinct color palettes in any theme: jinja —
+  `@string.special` / `@attribute`, SQL — `@keyword` / `@function`.
 
-## Установка
+## Install
 
-Получить папку расширения: `git clone https://github.com/chelpav/zed-db-tools-sql.git`
-(или распаковать архив). Затем один из двух способов.
+Get the extension folder (`git clone` this repository or unpack the archive),
+then pick one of the two ways.
 
-### Способ 1 — кнопкой (нужен доступ к github.com)
+### Way 1 — the button (requires github.com access)
 
-Zed → Extensions (⇧⌘X / Ctrl-Shift-X) → шестерёнка → **Install Dev Extension**
-→ выбрать папку расширения.
+Zed → Extensions (Shift-Cmd-X / Ctrl-Shift-X) → gear icon → **Install Dev
+Extension** → select the extension folder.
 
-Zed скомпилирует грамматику из репозитория форка (~10–30 сек) и попросит
-перезапуск. Кнопка ставит симлинком и оставляет временный клон
-`grammars/jinja2/` — при желании после неё запустить установщик из способа 2,
-он поставит чистую копию.
+Zed compiles the grammar from the fork's repository (~10–30 s) and asks for a
+restart. The button installs with a symlink and leaves a temporary
+`grammars/jinja2/` clone behind — feel free to re-run the installer from way 2
+to place a clean copy.
 
-### Способ 2 — установщиком (работает без сети)
+### Way 2 — the installer (works offline)
 
-- **macOS**: двойной клик по `install.command`;
+- **macOS**: double-click `install.command`;
 - **Linux**: `bash install.command`;
-- **Windows**: правый клик по `install.ps1` → «Run with PowerShell»
-  (или `powershell -ExecutionPolicy Bypass -File install.ps1`).
+- **Windows**: right-click `install.ps1` → "Run with PowerShell"
+  (or `powershell -ExecutionPolicy Bypass -File install.ps1`).
 
-Установщик кладёт копию расширения в каталог расширений Zed; грамматика —
-готовый `grammars/jinja2.wasm` (ABI 14, совместим со старыми версиями Zed),
-компиляция и сеть не нужны. Затем полностью перезапустить Zed.
+The installer places a copy into Zed's extensions directory; the grammar ships
+prebuilt (`grammars/jinja2.wasm`, tree-sitter ABI 14 — compatible with older
+Zed versions), no compilation or network needed. Then fully restart Zed.
 
-## Обновление
+## Update
 
-`git pull` (или распаковать новую версию поверх) → повторить установку любым
-способом.
+`git pull` (or unpack a new version over the folder) → repeat the install.
 
-## Проверка
+## Check
 
-Открыть любой `*.sql.tmpl` — внизу справа язык «SQL (db-tools tmpl)»,
-SQL и jinja-теги подсвечены разными цветами.
+Open any `*.sql.tmpl` file — the language in the bottom right corner should be
+"SQL (db-tools tmpl)", with SQL and jinja tags highlighted in different colors.
 
-## Устройство
+## Layout
 
 ```
-extension.toml                 — манифест; repository/commit — форк грамматики
-                                  (по нему Zed компилирует при установке кнопкой)
+extension.toml                 — manifest; repository/commit — the grammar fork
+                                  (used by the button to compile on install)
 languages/db-tools-sql/
-  config.toml                  — имя языка, path_suffixes, block_comment {# #}
-  highlights.scm               — подсветка jinja + фолбэк SQL-ключевых слов
-  injections.scm               — (raw_text) @content → язык SQL   ← ключевой файл
+  config.toml                  — language name, path_suffixes, block_comment {# #}
+  highlights.scm               — jinja highlighting + SQL fallback rules
+  injections.scm               — (raw_text) @content -> SQL   <- the key file
   indents.scm, brackets.scm
-grammars/jinja2.wasm           — предсобранная грамматика (для установки скриптом)
-install.command / install.ps1  — установщики (macOS+Linux / Windows)
+grammars/jinja2.wasm           — prebuilt grammar (for the offline installer)
+install.command / install.ps1  — installers (macOS+Linux / Windows)
 ```
 
-Отличия форка грамматики от апстрима — в
-[README форка](https://github.com/chelpav/tree-sitter-jinja2-sql).
+The differences between the grammar fork and upstream are described in the
+[fork's README](https://github.com/chelpav/tree-sitter-jinja2-sql).
 
-## Разработка
+## Development
 
-Пересборка грамматики:
+Rebuilding the grammar:
 
 ```bash
 git clone https://github.com/chelpav/tree-sitter-jinja2-sql.git
 cd tree-sitter-jinja2-sql
-tree-sitter generate --abi 14   # ABI 14 — совместимость со старыми Zed
-tree-sitter test                # корпус, должно быть 55/55
+tree-sitter generate --abi 14   # ABI 14 — compatible with older Zed
+tree-sitter test                # corpus tests, must be 57/57
 tree-sitter build --wasm        # docker (emscripten/emsdk)
-cp tree-sitter-jinja2.wasm <папка-расширения>/grammars/jinja2.wasm
+cp tree-sitter-jinja2.wasm <extension-folder>/grammars/jinja2.wasm
 ```
 
-После изменений грамматики: коммит и push форка, затем обновить `commit = <новый
-sha>` в `extension.toml` (кнопка компилирует именно этот sha) и push расширения.
+After grammar changes: commit and push the fork, then update
+`commit = <new sha>` in `extension.toml` (the button compiles exactly that
+sha) and push the extension.
 
-Нужны tree-sitter CLI (`brew install tree-sitter`) и Docker.
+Requires the tree-sitter CLI (`brew install tree-sitter`) and Docker.
