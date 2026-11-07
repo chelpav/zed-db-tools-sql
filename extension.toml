@@ -1,13 +1,13 @@
 id = "db-tools-sql"
 name = "SQL (db-tools tmpl)"
-version = "0.3.1"
+version = "0.4.0"
 schema_version = 1
-description = "Подсветка *.sql.tmpl шаблонов classic-db-tools: Jinja2-теги + SQL, инъектированный в сырой текст"
-authors = ["14654 backend team"]
+description = "Syntax highlighting for Jinja2 SQL templates (*.sql.tmpl, *.sql.j2, *.sql.jinja): jinja tags in their own color palette with SQL injected into the raw text"
+authors = ["Pavel Chelyaev"]
 
 # Грамматика — наш форк на GitHub (кнопка Install Dev Extension клонирует
 # и компилирует его; при загрузке расширения скриптом используется
 # готовый grammars/jinja2.wasm из этого же каталога).
 [grammars.jinja2]
 repository = "https://github.com/chelpav/tree-sitter-jinja2-sql"
-commit = "98118fb9a1c4809dbd4b33a74295d0609781c2e7"
+commit = "b5de74805362d937a12a99e3151bc99473ed43d3"
