@@ -1,6 +1,6 @@
 id = "db-tools-sql"
 name = "SQL (db-tools tmpl)"
-version = "0.3.0"
+version = "0.3.1"
 schema_version = 1
 description = "Подсветка *.sql.tmpl шаблонов classic-db-tools: Jinja2-теги + SQL, инъектированный в сырой текст"
 authors = ["14654 backend team"]
